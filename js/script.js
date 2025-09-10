@@ -2,12 +2,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const startScreen = document.getElementById('start-screen');
     const letsGoBtn = document.getElementById('lets-go-btn');
-    const devSkipBtn = document.getElementById('dev-skip-btn');
     const openingScreen = document.getElementById('opening-screen');
     const slides = document.querySelectorAll('.slide');
     const slideshowContainer = document.getElementById('slideshow-container');
     const finalMessage = document.getElementById('final-message');
     const journeyButton = document.getElementById('start-journey');
+    const skipButtonStart = document.getElementById('skip-to-itinerary-start');
     const passwordModal = document.getElementById('password-modal');
     const passwordInput = document.getElementById('password-input');
     const passwordSubmit = document.getElementById('password-submit');
@@ -56,6 +56,13 @@ document.addEventListener('DOMContentLoaded', function() {
         passwordInput.focus();
     });
     
+    
+    // スキップボタン（スタート画面）のクリック処理
+    skipButtonStart.addEventListener('click', function() {
+        passwordModal.classList.remove('hidden');
+        passwordInput.focus();
+    });
+    
     // パスワード確認ボタンのクリック処理
     passwordSubmit.addEventListener('click', function() {
         checkPassword();
@@ -75,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (inputPassword === correctPassword) {
             // パスワード正解
             passwordModal.classList.add('hidden');
+            startScreen.classList.add('hidden');
             openingScreen.classList.add('hidden');
             mainContent.classList.remove('hidden');
             document.body.style.overflow = 'auto';
@@ -149,20 +157,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }, 50);
     });
     
-    // 開発用スキップボタンの処理
-    devSkipBtn.addEventListener('click', function() {
-        // 直接旅程ページを表示
-        startScreen.classList.add('hidden');
-        openingScreen.classList.add('hidden');
-        mainContent.classList.remove('hidden');
-        document.body.style.overflow = 'auto';
-        
-        // 音楽を停止
-        backgroundMusic.pause();
-        backgroundMusic.currentTime = 0;
-        
-        console.log('開発用：旅程ページへスキップしました');
-    });
+    // 開発用スキップボタンの処理（削除）
+    // devSkipBtn.addEventListener('click', function() {
+    //     // 直接旅程ページを表示
+    //     startScreen.classList.add('hidden');
+    //     openingScreen.classList.add('hidden');
+    //     mainContent.classList.remove('hidden');
+    //     document.body.style.overflow = 'auto';
+    //     
+    //     // 音楽を停止
+    //     backgroundMusic.pause();
+    //     backgroundMusic.currentTime = 0;
+    //     
+    //     console.log('開発用：旅程ページへスキップしました');
+    // });
     
     // 背景画像のランダムな動きを追加
     function animateBackgroundImages() {
@@ -255,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // アクティブナビリンクの更新
         function updateActiveNavLink() {
-            const sections = ['top', 'day1', 'day2', 'map-access', 'checklist', 'message'];
+            const sections = ['top', 'day1', 'day2', 'checklist', 'qna', 'message'];
             let currentSection = 'top';
             
             sections.forEach(sectionId => {
@@ -420,6 +428,223 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // チェックリスト機能を初期化
     initChecklist();
+    
+    // アクティビティ詳細の展開機能
+    function initActivityDetails() {
+        const clickableCards = document.querySelectorAll('.activity-card.clickable');
+        
+        clickableCards.forEach(card => {
+            // data-listenerを使って重複を防ぐ
+            if (!card.dataset.listener) {
+                card.addEventListener('click', function() {
+                    const detailId = this.getAttribute('data-detail-id');
+                    const detailElement = document.getElementById(detailId);
+                    
+                    if (detailElement) {
+                        // 詳細の表示/非表示を切り替え
+                        if (detailElement.classList.contains('hidden')) {
+                            // 詳細を表示
+                            detailElement.classList.remove('hidden');
+                            this.classList.add('expanded');
+                            
+                            // スムーズにスクロール
+                            setTimeout(() => {
+                                detailElement.scrollIntoView({
+                                    behavior: 'smooth',
+                                    block: 'nearest'
+                                });
+                            }, 100);
+                        } else {
+                            // 詳細を非表示
+                            detailElement.classList.add('hidden');
+                            this.classList.remove('expanded');
+                        }
+                    }
+                });
+                card.dataset.listener = 'true';
+            }
+        });
+    }
+    
+    // 旅程ページが表示された時にアクティビティ詳細機能を初期化
+    const activityMutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' && 
+                !mainContent.classList.contains('hidden')) {
+                
+                // アクティビティ詳細機能を初期化
+                setTimeout(initActivityDetails, 100);
+                activityMutationObserver.disconnect();
+            }
+        });
+    });
+
+    activityMutationObserver.observe(mainContent, { attributes: true });
+    
+    // 質問コーナーの展開機能
+    function initQnA() {
+        const qnaQuestions = document.querySelectorAll('.qna-question');
+        
+        qnaQuestions.forEach(question => {
+            if (!question.dataset.qnaListener) {
+                question.addEventListener('click', function() {
+                    const qnaId = this.getAttribute('data-qna-id');
+                    const answerElement = document.getElementById(qnaId);
+                    
+                    if (answerElement) {
+                        // 回答の表示/非表示を切り替え
+                        if (answerElement.classList.contains('hidden')) {
+                            // 回答を表示
+                            answerElement.classList.remove('hidden');
+                            this.classList.add('expanded');
+                        } else {
+                            // 回答を非表示
+                            answerElement.classList.add('hidden');
+                            this.classList.remove('expanded');
+                        }
+                    }
+                });
+                question.dataset.qnaListener = 'true';
+            }
+        });
+    }
+    
+    // 旅程ページが表示された時に質問コーナー機能を初期化
+    const qnaMutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' && 
+                !mainContent.classList.contains('hidden')) {
+                
+                setTimeout(initQnA, 100);
+                qnaMutationObserver.disconnect();
+            }
+        });
+    });
+
+    qnaMutationObserver.observe(mainContent, { attributes: true });
+    
+    // 質問の回答保存機能
+    function initAnswerSaving() {
+        const answerInputs = document.querySelectorAll('.answer-input');
+        
+        answerInputs.forEach(input => {
+            const questionId = input.getAttribute('data-question');
+            
+            // 保存された回答を読み込み
+            const savedAnswer = localStorage.getItem(`qna-${questionId}`);
+            if (savedAnswer) {
+                input.value = savedAnswer;
+            }
+            
+            // 入力時に保存
+            input.addEventListener('input', function() {
+                localStorage.setItem(`qna-${questionId}`, this.value);
+            });
+        });
+    }
+    
+    // 旅程ページが表示された時に回答保存機能を初期化
+    const answerMutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' && 
+                !mainContent.classList.contains('hidden')) {
+                
+                setTimeout(initAnswerSaving, 100);
+                answerMutationObserver.disconnect();
+            }
+        });
+    });
+
+    answerMutationObserver.observe(mainContent, { attributes: true });
+    
+    // 回答共有機能
+    function initShareAnswers() {
+        const shareButton = document.getElementById('share-answers-btn');
+        
+        if (shareButton) {
+            shareButton.addEventListener('click', function() {
+                // 全ての回答を取得
+                const answers = {
+                    'q1': localStorage.getItem('qna-q1') || '未回答',
+                    'q2': localStorage.getItem('qna-q2') || '未回答',
+                    'q3': localStorage.getItem('qna-q3') || '未回答',
+                    'q4': localStorage.getItem('qna-q4') || '未回答',
+                    'q5-restaurant': localStorage.getItem('qna-q5-restaurant') || '未回答',
+                    'q5-reason': localStorage.getItem('qna-q5-reason') || '未回答'
+                };
+                
+                // 既存の回答表示エリアを探す
+                let answersDisplay = document.getElementById('answers-display');
+                
+                // 回答表示エリアがなければ作成
+                if (!answersDisplay) {
+                    answersDisplay = document.createElement('div');
+                    answersDisplay.id = 'answers-display';
+                    answersDisplay.className = 'answers-display';
+                    shareButton.parentNode.insertBefore(answersDisplay, shareButton.nextSibling);
+                }
+                
+                // 回答内容をHTMLで生成
+                const answersHTML = `
+                    <div class="answers-content">
+                        <h4>美優ちゃんの誕生日旅行 - 質問への回答 📝</h4>
+                        <div class="answer-item">
+                            <div class="answer-question">🚗 運転はしたいですか？（ちょっとでも）</div>
+                            <div class="answer-text">→ ${answers['q1']}</div>
+                        </div>
+                        <div class="answer-item">
+                            <div class="answer-question">🍺 お酒は飲みたいですか？</div>
+                            <div class="answer-text">→ ${answers['q2']}</div>
+                        </div>
+                        <div class="answer-item">
+                            <div class="answer-question">👍 体調管理は万全ですか？</div>
+                            <div class="answer-text">→ ${answers['q3']}</div>
+                        </div>
+                        <div class="answer-item">
+                            <div class="answer-question">😊 楽しみですか？</div>
+                            <div class="answer-text">→ ${answers['q4']}</div>
+                        </div>
+                        <div class="answer-item">
+                            <div class="answer-question">🍽️ 二日目の夜ご飯は美優が考えてください</div>
+                            <div class="answer-text">→ お店：${answers['q5-restaurant']}</div>
+                            <div class="answer-text">→ 理由：${answers['q5-reason']}</div>
+                        </div>
+                        <div class="answer-footer">このメッセージは美優ちゃんの誕生日旅行サイトから生成されました 💕</div>
+                    </div>
+                `;
+                
+                // 回答表示エリアに内容を設定
+                answersDisplay.innerHTML = answersHTML;
+                
+                // 表示を切り替える
+                if (answersDisplay.style.display === 'none' || !answersDisplay.style.display) {
+                    answersDisplay.style.display = 'block';
+                    shareButton.textContent = '📋 回答を隠す';
+                } else {
+                    answersDisplay.style.display = 'none';
+                    shareButton.textContent = '📋 回答を共有する';
+                }
+            });
+        }
+    }
+    
+    // 旅程ページが表示された時に回答共有機能を初期化
+    const shareMutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' && 
+                !mainContent.classList.contains('hidden')) {
+                
+                setTimeout(initShareAnswers, 100);
+                shareMutationObserver.disconnect();
+            }
+        });
+    });
+
+    shareMutationObserver.observe(mainContent, { attributes: true });
     
     // ルートアニメーション機能
     function initRouteAnimation() {

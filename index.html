@@ -12,9 +12,9 @@
 <body>
     <!-- スタート画面 -->
     <div id="start-screen" class="start-screen">
-        <!-- 開発用スキップボタン -->
-        <button id="dev-skip-btn" class="dev-skip-button">開発用：旅程へスキップ</button>
-        
+        <div class="skip-button-top-right">
+            <span id="skip-to-itinerary-start" class="skip-text-start">旅程を見る</span>
+        </div>
         <div class="start-content">
             
             <button id="lets-go-btn" class="lets-go-button">Let's Go!! 🎉</button>
@@ -65,6 +65,7 @@
             </div>
         </div>
 
+
         <!-- メッセージとボタン（スライドショー後に表示） -->
         <div id="final-message" class="final-message hidden">
             <div class="message-content">
@@ -102,8 +103,8 @@
                     <li><a href="#top" class="nav-link">トップ</a></li>
                     <li><a href="#day1" class="nav-link">1日目</a></li>
                     <li><a href="#day2" class="nav-link">2日目</a></li>
-                    <li><a href="#spots-access" class="nav-link">アクセス</a></li>
                     <li><a href="#checklist" class="nav-link">持ち物</a></li>
+                    <li><a href="#qna" class="nav-link">質問コーナー</a></li>
                     <li><a href="#message" class="nav-link">メッセージ</a></li>
                 </ul>
                 <div class="progress-bar">
@@ -132,77 +133,115 @@
                     <div id="day1" class="day-card" data-day="1">
                         <div class="day-header">
                             <span class="day-number">Day 1</span>
-                            <h3 class="day-title">伊勢神宮参拝 & おかげ横丁散策</h3>
+                            <h3 class="day-title">青山高原 & 志摩地中海村</h3>
                             <span class="day-date">1日目</span>
                         </div>
                         
                         <div class="timeline">
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">09:00</span>
+                                    <span class="time">08:30</span>
                                 </div>
-                                <div class="activity-card">
+                                <div class="activity-card clickable" data-detail-id="rental-car">
                                     <div class="activity-icon">🚗</div>
                                     <div class="activity-content">
-                                        <h4>出発</h4>
+                                        <h4>レンタカー</h4>
                                         <p>特別な2日間の始まり！美優ちゃんとの思い出作りスタート</p>
                                         <span class="activity-tag">移動</span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="time-marker">
-                                    <span class="time">11:30</span>
-                                </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">⛩️</div>
-                                    <div class="activity-content">
-                                        <h4>伊勢神宮（内宮）参拝</h4>
-                                        <p>日本の心のふるさとで特別な祈りを捧げよう。美優ちゃんの幸せを願って</p>
-                                        <span class="activity-tag">観光</span>
+                                    <div class="activity-details hidden" id="rental-car">
+                                        <h5>🚗 レンタカー詳細</h5>
+                                        <p><strong>時刻:</strong> 8:30</p>
+                                        <p><strong>場所:</strong> 三山木駅でピックアップ</p>
+                                        <p><strong>注意点:</strong> 集合時間だけ遅れないように！！</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">14:00</span>
+                                    <span class="time">10:30</span>
                                 </div>
-                                <div class="activity-card">
+                                <div class="activity-card clickable" data-detail-id="aoyama-plateau">
+                                    <div class="activity-icon">🌄</div>
+                                    <div class="activity-content">
+                                        <h4>青山高原（休憩）</h4>
+                                        <p>美しい高原で爽やかな風を感じながら休憩タイム</p>
+                                        <span class="activity-tag">休憩</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="aoyama-plateau">
+                                        <h5>🌄 青山高原詳細</h5>
+                                        <p><strong>時刻:</strong> 10:30</p>
+                                        <p><strong>場所:</strong> 三重県津市白山町二本木</p>
+                                        <p><strong>特徴:</strong> 標高600mの高原、風力発電所が特徴的</p>
+                                        <p><strong>駐車場:</strong> 無料、トイレあり</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">13:30</span>
+                                </div>
+                                <div class="activity-card clickable" data-detail-id="ise-udon">
                                     <div class="activity-icon">🍜</div>
                                     <div class="activity-content">
-                                        <h4>おかげ横丁でランチ</h4>
-                                        <p>伊勢名物の伊勢うどんや赤福で美味しい昼食タイム</p>
+                                        <h4>伊勢うどん ちとせ or つきよみ食堂</h4>
+                                        <p>伊勢神宮外宮近くちとせか内宮近くつきよみ食堂で伊勢うどんを堪能</p>
                                         <span class="activity-tag">グルメ</span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="time-marker">
-                                    <span class="time">16:00</span>
-                                </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">🛍️</div>
-                                    <div class="activity-content">
-                                        <h4>おかげ横丁散策</h4>
-                                        <p>江戸時代の町並みを楽しみながらお土産選び</p>
-                                        <span class="activity-tag">散策</span>
+                                    <div class="activity-details hidden" id="ise-udon">
+                                        <h5>🍜 伊勢うどん詳細</h5>
+                                        <p><strong>時刻:</strong> 13:30</p>
+                                        <p><strong>選択肢:</strong></p>
+                                        <p>・ちとせ（外宮近く）: 三重県伊勢市宮後1丁目1-11</p>
+                                        <p>・つきよみ食堂（内宮近く）: 三重県伊勢市宇治中之切町52</p>
+                                        <p><strong>特徴:</strong> 柔らかい麵と濃いめんつゆが特徴の伊勢名物</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">18:30</span>
+                                    <span class="time">14:30</span>
                                 </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">🏨</div>
+                                <div class="activity-card clickable" data-detail-id="shima-mediterranean">
+                                    <div class="activity-icon">🏛️</div>
                                     <div class="activity-content">
-                                        <h4>ホテルチェックイン</h4>
-                                        <p>素敵なホテルで1日目の疲れを癒やそう</p>
-                                        <span class="activity-tag">宿泊</span>
+                                        <h4>志摩地中海村</h4>
+                                        <p>地中海の美しい町並みを再現したリゾート施設を散策</p>
+                                        <span class="activity-tag">観光</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="shima-mediterranean">
+                                        <h5>🏛️ 志摩地中海村詳細</h5>
+                                        <p><strong>時刻:</strong> 14:30</p>
+                                        <p><strong>住所:</strong> 三重県志摩市磯部町ヶ峠1332-3</p>
+                                        <p><strong>特徴:</strong> スペイン風の美しいリゾート、英虞湾を望む絶景</p>
+                                        <p><strong>料金:</strong> 入園料 700円</p>
+                                        <p><strong>体験:</strong> モノづくり体験もする</p>
+                                        <p><strong>駐車場:</strong> 無料、200台収容</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">16:30</span>
+                                </div>
+                                <div class="activity-card clickable" data-detail-id="oedo-onsen">
+                                    <div class="activity-icon">♨️</div>
+                                    <div class="activity-content">
+                                        <h4>大江戸温泉 Premium 伊勢志摩</h4>
+                                        <p>プレミアムな温泉でゆっくりと1日目の疲れを癒やそう</p>
+                                        <span class="activity-tag">温泉・宿泊</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="oedo-onsen">
+                                        <h5>♨️ 大江戸温泉 Premium 伊勢志摩詳細</h5>
+                                        <p><strong>時刻:</strong> 16:30</p>
+                                        <p><strong>住所:</strong> 三重県志摩市阿児町神明723-1</p>
+                                        <p><strong>特徴:</strong> 英虞湾を眺めながらの温泉、プレミアムルーム対応</p>
+                                        <p><strong>チェックイン:</strong> 15:00〜</p>
+                                        <p><strong>施設:</strong> 大浴場、露天風呂、サウナ、豪華バイキング、プレミアムラウンジ、カラオケ</p>
                                     </div>
                                 </div>
                             </div>
@@ -213,63 +252,72 @@
                     <div id="day2" class="day-card" data-day="2">
                         <div class="day-header">
                             <span class="day-number">Day 2</span>
-                            <h3 class="day-title">志摩半島の絶景 & 海の幸グルメ</h3>
+                            <h3 class="day-title">志摩グリーンアドベンチャー & 桐垣展望台</h3>
                             <span class="day-date">2日目</span>
                         </div>
                         
                         <div class="timeline">
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">09:00</span>
+                                    <span class="time">08:30</span>
                                 </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">🌅</div>
+                                <div class="activity-card clickable" data-detail-id="breakfast-buffet">
+                                    <div class="activity-icon">🍽️</div>
                                     <div class="activity-content">
-                                        <h4>ホテルで朝食</h4>
-                                        <p>美味しい朝食で2日目のパワーチャージ</p>
+                                        <h4>朝食バイキング</h4>
+                                        <p>バイキング形式の豪華な朝食で2日目のパワーチャージ</p>
                                         <span class="activity-tag">グルメ</span>
                                     </div>
-                                </div>
-                            </div>
-
-                            <div class="timeline-item">
-                                <div class="time-marker">
-                                    <span class="time">10:30</span>
-                                </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">🚢</div>
-                                    <div class="activity-content">
-                                        <h4>英虞湾遊覧船</h4>
-                                        <p>リアス海岸の絶景を船上から楽しもう。真珠筏も見れるかも</p>
-                                        <span class="activity-tag">観光</span>
+                                    <div class="activity-details hidden" id="breakfast-buffet">
+                                        <h5>🍽️ 朝食バイキング詳細</h5>
+                                        <p><strong>時刻:</strong> 8:30〜9:45</p>
+                                        <p><strong>場所:</strong> ホテル内レストラン</p>
+                                        <p><strong>メニュー:</strong> 和洋中料理、サラダバー、フルーツ、パン、ドリンク等</p>
+                                        <p><strong>特徴:</strong> 地元産の新鮮な食材を使用した豊富なメニュー</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">13:00</span>
+                                    <span class="time">09:45</span>
                                 </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">🦪</div>
+                                <div class="activity-card clickable" data-detail-id="checkout">
+                                    <div class="activity-icon">🏨</div>
                                     <div class="activity-content">
-                                        <h4>海鮮ランチ</h4>
-                                        <p>新鮮な伊勢海老や牡蠣など、海の幸をたっぷり堪能</p>
-                                        <span class="activity-tag">グルメ</span>
+                                        <h4>チェックアウト</h4>
+                                        <p>ホテルをチェックアウトして2日目の冒険へ</p>
+                                        <span class="activity-tag">手続き</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="checkout">
+                                        <h5>🏨 チェックアウト詳細</h5>
+                                        <p><strong>時刻:</strong> 9:45</p>
+                                        <p><strong>手続き:</strong> フロントでチェックアウト</p>
+                                        <p><strong>注意:</strong> 忘れ物がないか確認</p>
+                                        <p><strong>荷物:</strong> 車に積み込み、次の目的地へ出発</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">15:00</span>
+                                    <span class="time">10:00</span>
                                 </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">💎</div>
+                                <div class="activity-card clickable" data-detail-id="shima-green">
+                                    <div class="activity-icon">🌲</div>
                                     <div class="activity-content">
-                                        <h4>ミキモト真珠島</h4>
-                                        <p>美優ちゃんにぴったりの真珠体験。海女さんの実演も見学</p>
+                                        <h4>志摩グリーンアドベンチャー</h4>
+                                        <p>自然豊かなアスレチック施設で思いっきり楽しもう</p>
                                         <span class="activity-tag">体験</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="shima-green">
+                                        <h5>🌲 志摩グリーンアドベンチャー詳細</h5>
+                                        <p><strong>時刻:</strong> 10:00〜17:00</p>
+                                        <p><strong>住所:</strong> 三重県志摩市阿児町神明1821</p>
+                                        <p><strong>アクティビティ:</strong> アスレチック、ジップライン、カヤック体験等</p>
+                                        <p><strong>料金:</strong> アクティビティによって異なる</p>
+                                        <p><strong>服装:</strong> 動きやすい服装、運動靴推奨</p>
+                                        <p><strong>駐車場:</strong> 無料、大型駐車場あり</p>
                                     </div>
                                 </div>
                             </div>
@@ -278,26 +326,64 @@
                                 <div class="time-marker">
                                     <span class="time">17:00</span>
                                 </div>
-                                <div class="activity-card">
-                                    <div class="activity-icon">🌅</div>
+                                <div class="activity-card clickable" data-detail-id="activity-end">
+                                    <div class="activity-icon">🎯</div>
                                     <div class="activity-content">
-                                        <h4>賢島展望台で夕日鑑賞</h4>
-                                        <p>美しい英虞湾に沈む夕日を二人で眺める特別な時間</p>
-                                        <span class="activity-tag">絶景</span>
+                                        <h4>終了</h4>
+                                        <p>志摩グリーンアドベンチャーでの楽しい体験を終了</p>
+                                        <span class="activity-tag">終了</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="activity-end">
+                                        <h5>🎯 アクティビティ終了詳細</h5>
+                                        <p><strong>時刻:</strong> 17:00</p>
+                                        <p><strong>内容:</strong> 一日のアクティビティ終了</p>
+                                        <p><strong>準備:</strong> 着替え、整理整頓</p>
+                                        <p><strong>次の目的地:</strong> 桐垣展望台へ移動準備</p>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">19:00</span>
+                                    <span class="time">17:30</span>
                                 </div>
-                                <div class="activity-card">
+                                <div class="activity-card clickable" data-detail-id="kirigaki-observatory">
+                                    <div class="activity-icon">🌅</div>
+                                    <div class="activity-content">
+                                        <h4>桐垣展望台</h4>
+                                        <p>美しい景色を二人で眺める特別な時間</p>
+                                        <span class="activity-tag">絶景</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="kirigaki-observatory">
+                                        <h5>🌅 桐垣展望台詳細</h5>
+                                        <p><strong>時刻:</strong> 17:30〜18:00</p>
+                                        <p><strong>住所:</strong> 三重県志摩市阿児町神明</p>
+                                        <p><strong>特徴:</strong> 英虞湾を一望できる絶景ポイント</p>
+                                        <p><strong>ベストタイム:</strong> 夕日時が特に美しい</p>
+                                        <p><strong>駐車場:</strong> 無料、小さな駐車スペース</p>
+                                        <p><strong>注意:</strong> 風が強いことがあるので羽織り物を持参</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">18:00</span>
+                                </div>
+                                <div class="activity-card clickable" data-detail-id="return-home">
                                     <div class="activity-icon">🏠</div>
                                     <div class="activity-content">
-                                        <h4>帰路へ</h4>
+                                        <h4>帰路</h4>
                                         <p>素敵な思い出を胸に帰路につこう。お疲れ様でした！</p>
                                         <span class="activity-tag">移動</span>
+                                    </div>
+                                    <div class="activity-details hidden" id="return-home">
+                                        <h5>🏠 帰路詳細</h5>
+                                        <p><strong>時刻:</strong> 18:00</p>
+                                        <p><strong>ルート:</strong> 伊勢自動車道〜東名高速道路</p>
+                                        <p><strong>所要時間:</strong> 約2時間〜2時間30分（交通状況による）</p>
+                                        <p><strong>レンタカー返却:</strong> 20:30頃予定</p>
+                                        <p><strong>注意:</strong> 疲労運転に気をつけて、適度休憩を取りながら</p>
                                     </div>
                                 </div>
                             </div>
@@ -306,58 +392,6 @@
                 </div>
             </section>
 
-            <!-- 各スポットのアクセス -->
-            <section id="spots-access" class="spots-access-section">
-                <div class="container">
-                    <h2 class="section-title">各観光スポットへのアクセス</h2>
-                        
-                        <div class="access-grid">
-                            <div class="access-card">
-                                <div class="access-icon">⛩️</div>
-                                <h4>伊勢神宮（内宮）</h4>
-                                <div class="access-info">
-                                    <p><strong>住所:</strong> 三重県伊勢市宇治館町1</p>
-                                    <p><strong>駐車場:</strong> 内宮前駐車場（1時間無料）</p>
-                                    <p><strong>営業時間:</strong> 5:00-18:00（季節により変動）</p>
-                                    <p><strong>アクセス:</strong> 伊勢ICから車で約15分</p>
-                                </div>
-                            </div>
-
-                            <div class="access-card">
-                                <div class="access-icon">🏘️</div>
-                                <h4>おかげ横丁</h4>
-                                <div class="access-info">
-                                    <p><strong>住所:</strong> 三重県伊勢市宇治中之切町52</p>
-                                    <p><strong>駐車場:</strong> 内宮前駐車場利用</p>
-                                    <p><strong>営業時間:</strong> 9:30-17:30（店舗により異なる）</p>
-                                    <p><strong>アクセス:</strong> 内宮から徒歩すぐ</p>
-                                </div>
-                            </div>
-
-                            <div class="access-card">
-                                <div class="access-icon">🚢</div>
-                                <h4>英虞湾遊覧船</h4>
-                                <div class="access-info">
-                                    <p><strong>住所:</strong> 三重県志摩市阿児町神明747-17</p>
-                                    <p><strong>駐車場:</strong> 賢島港駐車場</p>
-                                    <p><strong>営業時間:</strong> 9:15-15:30（約1時間毎運航）</p>
-                                    <p><strong>アクセス:</strong> 賢島駅から徒歩3分</p>
-                                </div>
-                            </div>
-
-                            <div class="access-card">
-                                <div class="access-icon">💎</div>
-                                <h4>ミキモト真珠島</h4>
-                                <div class="access-info">
-                                    <p><strong>住所:</strong> 三重県鳥羽市鳥羽1-7-1</p>
-                                    <p><strong>駐車場:</strong> 専用駐車場あり（無料）</p>
-                                    <p><strong>営業時間:</strong> 8:30-17:00</p>
-                                    <p><strong>アクセス:</strong> 鳥羽駅から徒歩5分</p>
-                                </div>
-                            </div>
-                        </div>
-                </div>
-            </section>
 
             <!-- 持ち物チェックリスト -->
             <section id="checklist" class="checklist-section">
@@ -469,35 +503,6 @@
                             </div>
                         </div>
 
-                        <!-- 薬・ヘルスケア -->
-                        <div class="checklist-category">
-                            <h3 class="category-title">
-                                <span class="category-icon">💊</span>
-                                薬・ヘルスケア
-                            </h3>
-                            <div class="checklist-items">
-                                <label class="checklist-item">
-                                    <input type="checkbox" class="item-checkbox">
-                                    <span class="checkmark"></span>
-                                    <span class="item-text">常備薬</span>
-                                </label>
-                                <label class="checklist-item">
-                                    <input type="checkbox" class="item-checkbox">
-                                    <span class="checkmark"></span>
-                                    <span class="item-text">絆創膏</span>
-                                </label>
-                                <label class="checklist-item">
-                                    <input type="checkbox" class="item-checkbox">
-                                    <span class="checkmark"></span>
-                                    <span class="item-text">除菌ジェル</span>
-                                </label>
-                                <label class="checklist-item">
-                                    <input type="checkbox" class="item-checkbox">
-                                    <span class="checkmark"></span>
-                                    <span class="item-text">酔い止め薬</span>
-                                </label>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="checklist-progress">
@@ -508,6 +513,109 @@
                             </div>
                         </div>
                         <button class="reset-checklist" id="reset-checklist">リセット</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 質問コーナー -->
+            <section id="qna" class="qna-section">
+                <div class="container">
+                    <h2 class="section-title">質問コーナー</h2>
+                    
+                    <div class="qna-intro">
+                        <p>美優ちゃんへの質問コーナー！答えてね😊💡</p>
+                    </div>
+
+                    <div class="qna-list">
+                        <!-- 質問1 -->
+                        <div class="qna-item">
+                            <div class="qna-question" data-qna-id="q1">
+                                <div class="question-icon">🚗</div>
+                                <h3>運転はしたいですか？（ちょっとでも）</h3>
+                                <div class="toggle-icon">▼</div>
+                            </div>
+                            <div class="qna-answer hidden" id="q1">
+                                <p>美優ちゃんの答えを聞かせてね！</p>
+                                <div class="answer-space">
+                                    <p>→ 美優ちゃんの答え：</p>
+                                    <input type="text" class="answer-input" placeholder="ここに答えを書いてね..." data-question="q1">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 質問2 -->
+                        <div class="qna-item">
+                            <div class="qna-question" data-qna-id="q2">
+                                <div class="question-icon">🍺</div>
+                                <h3>お酒は飲みたいですか？</h3>
+                                <div class="toggle-icon">▼</div>
+                            </div>
+                            <div class="qna-answer hidden" id="q2">
+                                <p>美優ちゃんの答えを聞かせてね！</p>
+                                <div class="answer-space">
+                                    <p>→ 美優ちゃんの答え：</p>
+                                    <input type="text" class="answer-input" placeholder="ここに答えを書いてね..." data-question="q2">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 質問3 -->
+                        <div class="qna-item">
+                            <div class="qna-question" data-qna-id="q3">
+                                <div class="question-icon">👍</div>
+                                <h3>体調管理は万全ですか？</h3>
+                                <div class="toggle-icon">▼</div>
+                            </div>
+                            <div class="qna-answer hidden" id="q3">
+                                <p>美優ちゃんの答えを聞かせてね！</p>
+                                <div class="answer-space">
+                                    <p>→ 美優ちゃんの答え：</p>
+                                    <input type="text" class="answer-input" placeholder="ここに答えを書いてね..." data-question="q3">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 質問4 -->
+                        <div class="qna-item">
+                            <div class="qna-question" data-qna-id="q4">
+                                <div class="question-icon">😊</div>
+                                <h3>楽しみですか？</h3>
+                                <div class="toggle-icon">▼</div>
+                            </div>
+                            <div class="qna-answer hidden" id="q4">
+                                <p>美優ちゃんの答えを聞かせてね！</p>
+                                <div class="answer-space">
+                                    <p>→ 美優ちゃんの答え：</p>
+                                    <input type="text" class="answer-input" placeholder="ここに答えを書いてね..." data-question="q4">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 質問5 -->
+                        <div class="qna-item">
+                            <div class="qna-question" data-qna-id="q5">
+                                <div class="question-icon">🍽️</div>
+                                <h3>二日目の夜ご飯は美優が考えてください</h3>
+                                <div class="toggle-icon">▼</div>
+                            </div>
+                            <div class="qna-answer hidden" id="q5">
+                                <p>美優ちゃんが選んでくれたお店で素敵な夜ご飯を楽しみましょう！</p>
+                                <div class="answer-space">
+                                    <p>→ 美優ちゃんの選んだお店：</p>
+                                    <input type="text" class="answer-input" placeholder="お店の名前を書いてね..." data-question="q5-restaurant">
+                                    <p>→ 理由：</p>
+                                    <input type="text" class="answer-input" placeholder="なぜそのお店を選んだか教えてね..." data-question="q5-reason">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 回答共有ボタン -->
+                    <div class="share-answers-section">
+                        <button id="share-answers-btn" class="share-answers-button">
+                            📋 回答を共有する
+                        </button>
+                        <p class="share-description">美優ちゃんの回答をコピーして共有できます</p>
                     </div>
                 </div>
             </section>
