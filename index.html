@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美優ちゃんの誕生日旅行</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- スタート画面 -->
+    <div id="start-screen" class="start-screen">
+        <!-- 開発用スキップボタン -->
+        <button id="dev-skip-btn" class="dev-skip-button">開発用：旅程へスキップ</button>
+        
+        <div class="start-content">
+            
+            <button id="lets-go-btn" class="lets-go-button">Let's Go!! 🎉</button>
+        </div>
+        <div class="start-decoration">
+            <div class="floating-heart">💕</div>
+            <div class="floating-heart">🎂</div>
+            <div class="floating-heart">🌸</div>
+            <div class="floating-heart">✨</div>
+        </div>
+    </div>
+
+    <!-- オープニングムービー画面 -->
+    <div id="opening-screen" class="opening-container hidden">
+        <!-- 背景動画 -->
+        <video id="background-video" muted loop>
+            <source src="assets/videos/home2.MP4" type="video/mp4">
+        </video>
+        
+        <!-- 音楽再生 -->
+        <audio id="background-music" preload="auto" loop>
+            <source src="assets/music/home2.MP4" type="audio/mp4">
+            <source src="assets/music/home2.MP4" type="video/mp4">
+        </audio>
+        
+        <!-- 画像スライドショー -->
+        <div id="slideshow-container" class="slideshow-container">
+            <div class="slide active">
+                <img src="assets/images/home1.jpg" alt="思い出の写真1">
+            </div>
+            <div class="slide">
+                <img src="assets/images/home2.jpg" alt="思い出の写真2">
+            </div>
+            <div class="slide">
+                <img src="assets/images/home3.jpg" alt="思い出の写真3">
+            </div>
+            <div class="slide">
+                <img src="assets/images/home4.jpg" alt="思い出の写真4">
+            </div>
+            <div class="slide">
+                <img src="assets/images/home5.jpg" alt="思い出の写真5">
+            </div>
+            <div class="slide">
+                <img src="assets/images/home6.jpg" alt="思い出の写真6">
+            </div>
+            <div class="slide">
+                <img src="assets/images/home7.jpg" alt="思い出の写真7">
+            </div>
+        </div>
+
+        <!-- メッセージとボタン（スライドショー後に表示） -->
+        <div id="final-message" class="final-message hidden">
+            <div class="message-content">
+                <h1 class="birthday-message">美優ちゃん</h1>
+                <h2 class="birthday-subtitle">誕生日おめでとう！</h2>
+                <button id="start-journey" class="journey-button">最高な2日間の旅へ</button>
+            </div>
+            <!-- 背景に4枚の画像を配置 -->
+            <div class="background-images">
+                <img src="assets/images/home1.jpg" class="bg-img bg-img-1" alt="">
+                <img src="assets/images/home3.jpg" class="bg-img bg-img-2" alt="">
+                <img src="assets/images/home5.jpg" class="bg-img bg-img-3" alt="">
+                <img src="assets/images/home7.jpg" class="bg-img bg-img-4" alt="">
+            </div>
+        </div>
+    </div>
+
+    <!-- パスワード入力モーダル -->
+    <div id="password-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>パスワードを入力してください</h3>
+            <input type="password" id="password-input" placeholder="パスワードを入力">
+            <button id="password-submit">確認</button>
+            <div id="password-error" class="error-message hidden">パスワードが違います</div>
+        </div>
+    </div>
+
+    <!-- 旅程画面（パスワード認証後に表示） -->
+    <div id="main-content" class="main-content hidden">
+        <!-- 固定ナビゲーション -->
+        <nav id="fixed-nav" class="fixed-nav hidden">
+            <div class="nav-container">
+                <div class="nav-brand">美優ちゃんの旅</div>
+                <ul class="nav-menu">
+                    <li><a href="#top" class="nav-link">トップ</a></li>
+                    <li><a href="#day1" class="nav-link">1日目</a></li>
+                    <li><a href="#day2" class="nav-link">2日目</a></li>
+                    <li><a href="#spots-access" class="nav-link">アクセス</a></li>
+                    <li><a href="#checklist" class="nav-link">持ち物</a></li>
+                    <li><a href="#message" class="nav-link">メッセージ</a></li>
+                </ul>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- ヘッダー -->
+        <header id="top" class="itinerary-header">
+            <div class="header-content">
+                <h1 class="page-title">美優ちゃんの誕生日旅行</h1>
+                <p class="trip-subtitle">伊勢志摩 2日間の特別な旅</p>
+                <div class="trip-date">2025年 誕生日記念</div>
+            </div>
+        </header>
+
+        <!-- メインコンテンツ -->
+        <main class="itinerary-main">
+            <!-- タイムライン -->
+            <section class="timeline-section">
+                <div class="container">
+                    <h2 class="section-title">旅程スケジュール</h2>
+                    
+                    <!-- 1日目 -->
+                    <div id="day1" class="day-card" data-day="1">
+                        <div class="day-header">
+                            <span class="day-number">Day 1</span>
+                            <h3 class="day-title">伊勢神宮参拝 & おかげ横丁散策</h3>
+                            <span class="day-date">1日目</span>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">09:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🚗</div>
+                                    <div class="activity-content">
+                                        <h4>出発</h4>
+                                        <p>特別な2日間の始まり！美優ちゃんとの思い出作りスタート</p>
+                                        <span class="activity-tag">移動</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">11:30</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">⛩️</div>
+                                    <div class="activity-content">
+                                        <h4>伊勢神宮（内宮）参拝</h4>
+                                        <p>日本の心のふるさとで特別な祈りを捧げよう。美優ちゃんの幸せを願って</p>
+                                        <span class="activity-tag">観光</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">14:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🍜</div>
+                                    <div class="activity-content">
+                                        <h4>おかげ横丁でランチ</h4>
+                                        <p>伊勢名物の伊勢うどんや赤福で美味しい昼食タイム</p>
+                                        <span class="activity-tag">グルメ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">16:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🛍️</div>
+                                    <div class="activity-content">
+                                        <h4>おかげ横丁散策</h4>
+                                        <p>江戸時代の町並みを楽しみながらお土産選び</p>
+                                        <span class="activity-tag">散策</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">18:30</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🏨</div>
+                                    <div class="activity-content">
+                                        <h4>ホテルチェックイン</h4>
+                                        <p>素敵なホテルで1日目の疲れを癒やそう</p>
+                                        <span class="activity-tag">宿泊</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2日目 -->
+                    <div id="day2" class="day-card" data-day="2">
+                        <div class="day-header">
+                            <span class="day-number">Day 2</span>
+                            <h3 class="day-title">志摩半島の絶景 & 海の幸グルメ</h3>
+                            <span class="day-date">2日目</span>
+                        </div>
+                        
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">09:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🌅</div>
+                                    <div class="activity-content">
+                                        <h4>ホテルで朝食</h4>
+                                        <p>美味しい朝食で2日目のパワーチャージ</p>
+                                        <span class="activity-tag">グルメ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">10:30</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🚢</div>
+                                    <div class="activity-content">
+                                        <h4>英虞湾遊覧船</h4>
+                                        <p>リアス海岸の絶景を船上から楽しもう。真珠筏も見れるかも</p>
+                                        <span class="activity-tag">観光</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">13:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🦪</div>
+                                    <div class="activity-content">
+                                        <h4>海鮮ランチ</h4>
+                                        <p>新鮮な伊勢海老や牡蠣など、海の幸をたっぷり堪能</p>
+                                        <span class="activity-tag">グルメ</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">15:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">💎</div>
+                                    <div class="activity-content">
+                                        <h4>ミキモト真珠島</h4>
+                                        <p>美優ちゃんにぴったりの真珠体験。海女さんの実演も見学</p>
+                                        <span class="activity-tag">体験</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">17:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🌅</div>
+                                    <div class="activity-content">
+                                        <h4>賢島展望台で夕日鑑賞</h4>
+                                        <p>美しい英虞湾に沈む夕日を二人で眺める特別な時間</p>
+                                        <span class="activity-tag">絶景</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="timeline-item">
+                                <div class="time-marker">
+                                    <span class="time">19:00</span>
+                                </div>
+                                <div class="activity-card">
+                                    <div class="activity-icon">🏠</div>
+                                    <div class="activity-content">
+                                        <h4>帰路へ</h4>
+                                        <p>素敵な思い出を胸に帰路につこう。お疲れ様でした！</p>
+                                        <span class="activity-tag">移動</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 各スポットのアクセス -->
+            <section id="spots-access" class="spots-access-section">
+                <div class="container">
+                    <h2 class="section-title">各観光スポットへのアクセス</h2>
+                        
+                        <div class="access-grid">
+                            <div class="access-card">
+                                <div class="access-icon">⛩️</div>
+                                <h4>伊勢神宮（内宮）</h4>
+                                <div class="access-info">
+                                    <p><strong>住所:</strong> 三重県伊勢市宇治館町1</p>
+                                    <p><strong>駐車場:</strong> 内宮前駐車場（1時間無料）</p>
+                                    <p><strong>営業時間:</strong> 5:00-18:00（季節により変動）</p>
+                                    <p><strong>アクセス:</strong> 伊勢ICから車で約15分</p>
+                                </div>
+                            </div>
+
+                            <div class="access-card">
+                                <div class="access-icon">🏘️</div>
+                                <h4>おかげ横丁</h4>
+                                <div class="access-info">
+                                    <p><strong>住所:</strong> 三重県伊勢市宇治中之切町52</p>
+                                    <p><strong>駐車場:</strong> 内宮前駐車場利用</p>
+                                    <p><strong>営業時間:</strong> 9:30-17:30（店舗により異なる）</p>
+                                    <p><strong>アクセス:</strong> 内宮から徒歩すぐ</p>
+                                </div>
+                            </div>
+
+                            <div class="access-card">
+                                <div class="access-icon">🚢</div>
+                                <h4>英虞湾遊覧船</h4>
+                                <div class="access-info">
+                                    <p><strong>住所:</strong> 三重県志摩市阿児町神明747-17</p>
+                                    <p><strong>駐車場:</strong> 賢島港駐車場</p>
+                                    <p><strong>営業時間:</strong> 9:15-15:30（約1時間毎運航）</p>
+                                    <p><strong>アクセス:</strong> 賢島駅から徒歩3分</p>
+                                </div>
+                            </div>
+
+                            <div class="access-card">
+                                <div class="access-icon">💎</div>
+                                <h4>ミキモト真珠島</h4>
+                                <div class="access-info">
+                                    <p><strong>住所:</strong> 三重県鳥羽市鳥羽1-7-1</p>
+                                    <p><strong>駐車場:</strong> 専用駐車場あり（無料）</p>
+                                    <p><strong>営業時間:</strong> 8:30-17:00</p>
+                                    <p><strong>アクセス:</strong> 鳥羽駅から徒歩5分</p>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </section>
+
+            <!-- 持ち物チェックリスト -->
+            <section id="checklist" class="checklist-section">
+                <div class="container">
+                    <h2 class="section-title">持ち物チェックリスト</h2>
+                    
+                    <div class="checklist-intro">
+                        <p>忘れ物がないように、出発前にチェックしましょう！✅</p>
+                    </div>
+
+                    <div class="checklist-categories">
+                        <!-- 必需品 -->
+                        <div class="checklist-category">
+                            <h3 class="category-title">
+                                <span class="category-icon">📋</span>
+                                必需品
+                            </h3>
+                            <div class="checklist-items">
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">身分証明書（免許証・保険証）</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">現金・クレジットカード</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">スマートフォン・充電器</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">ホテル予約確認書</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 衣類・身の回り品 -->
+                        <div class="checklist-category">
+                            <h3 class="category-title">
+                                <span class="category-icon">👕</span>
+                                衣類・身の回り品
+                            </h3>
+                            <div class="checklist-items">
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">着替え（1日分）</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">下着・靴下</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">歩きやすい靴</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">羽織りもの（気温変化対応）</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">雨具（折りたたみ傘）</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 便利グッズ -->
+                        <div class="checklist-category">
+                            <h3 class="category-title">
+                                <span class="category-icon">🎒</span>
+                                便利グッズ
+                            </h3>
+                            <div class="checklist-items">
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">カメラ・自撮り棒</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">モバイルバッテリー</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">日焼け止め・帽子</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">ティッシュ・ハンカチ</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">エコバッグ（お土産用）</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- 薬・ヘルスケア -->
+                        <div class="checklist-category">
+                            <h3 class="category-title">
+                                <span class="category-icon">💊</span>
+                                薬・ヘルスケア
+                            </h3>
+                            <div class="checklist-items">
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">常備薬</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">絆創膏</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">除菌ジェル</span>
+                                </label>
+                                <label class="checklist-item">
+                                    <input type="checkbox" class="item-checkbox">
+                                    <span class="checkmark"></span>
+                                    <span class="item-text">酔い止め薬</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checklist-progress">
+                        <div class="progress-info">
+                            <span class="progress-text">準備完了度: <span id="progress-percentage">0</span>%</span>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar-fill" id="progress-bar-fill"></div>
+                            </div>
+                        </div>
+                        <button class="reset-checklist" id="reset-checklist">リセット</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 特別なメッセージ -->
+            <section id="message" class="special-message-section">
+                <div class="container">
+                    <div class="message-box">
+                        <h2>Special Message</h2>
+                        <p class="message-text">
+                            美優ちゃん、お誕生日おめでとう！<br>
+                            この特別な2日間が、あなたにとって最高の思い出になりますように。<br>
+                            いつも笑顔でいてくれるあなたと過ごす時間が、私にとって一番の宝物です。
+                        </p>
+                        <div class="signature">愛を込めて 💕</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- トップに戻るボタン -->
+        <button id="back-to-top" class="back-to-top hidden">
+            <span class="back-to-top-icon">↑</span>
+        </button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

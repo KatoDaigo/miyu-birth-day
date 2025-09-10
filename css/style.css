@@ -1,0 +1,1585 @@
+/* リセットCSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans JP', sans-serif;
+    overflow: hidden;
+    background: #000;
+}
+
+/* 共通クラス */
+.hidden {
+    display: none !important;
+}
+
+/* スタート画面 */
+.start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #2c3e50, #34495e, #2c3e50);
+    background-size: 400% 400%;
+    animation: gradientShift 8s ease infinite;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.start-content {
+    text-align: center;
+    color: white;
+    z-index: 5;
+    position: relative;
+    padding: 60px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.welcome-title {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 3rem;
+    font-weight: 300;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 30px;
+    letter-spacing: 2px;
+}
+
+.welcome-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 50px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+.lets-go-button {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    padding: 18px 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: none;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+    backdrop-filter: blur(10px);
+}
+
+.lets-go-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.lets-go-button:active {
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* 開発用スキップボタン */
+.dev-skip-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 0, 0, 0.8);
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    color: white;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+.dev-skip-button:hover {
+    background: rgba(255, 0, 0, 1);
+    transform: scale(1.05);
+}
+
+.start-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.start-decoration .floating-heart {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: floatingStart 8s ease-in-out infinite;
+    opacity: 0.3;
+}
+
+.start-decoration .floating-heart:nth-child(1) {
+    top: 20%;
+    left: 15%;
+    animation-delay: 0s;
+}
+
+.start-decoration .floating-heart:nth-child(2) {
+    top: 25%;
+    right: 20%;
+    animation-delay: 2s;
+}
+
+.start-decoration .floating-heart:nth-child(3) {
+    bottom: 30%;
+    left: 18%;
+    animation-delay: 4s;
+}
+
+.start-decoration .floating-heart:nth-child(4) {
+    bottom: 20%;
+    right: 15%;
+    animation-delay: 6s;
+}
+
+/* オープニング画面 */
+.opening-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 1000;
+}
+
+/* 背景動画 */
+#background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+/* スライドショーコンテナ */
+.slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* スライド */
+.slide {
+    position: absolute;
+    width: 80%;
+    max-width: 600px;
+    height: 80%;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: all 1.5s ease-in-out;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 最終メッセージ */
+.final-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.final-message.show {
+    animation: fadeInMessage 2s ease-in-out forwards;
+}
+
+.message-content {
+    text-align: center;
+    color: white;
+    z-index: 5;
+    position: relative;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.birthday-message {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4rem;
+    color: #ff69b4;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    animation: sparkle 2s ease-in-out infinite alternate;
+}
+
+.birthday-subtitle {
+    font-size: 2rem;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    margin-bottom: 40px;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+.journey-button {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 20px 40px;
+    background: linear-gradient(45deg, #ff69b4, #ffd700);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 10px 20px rgba(255, 105, 180, 0.3);
+}
+
+.journey-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 105, 180, 0.4);
+    background: linear-gradient(45deg, #ffd700, #ff69b4);
+}
+
+/* 背景画像 */
+.background-images {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.bg-img {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    opacity: 0.3;
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: floatingImages 6s ease-in-out infinite;
+}
+
+.bg-img-1 {
+    top: 10%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.bg-img-2 {
+    top: 20%;
+    right: 10%;
+    animation-delay: 1.5s;
+}
+
+.bg-img-3 {
+    bottom: 20%;
+    left: 15%;
+    animation-delay: 3s;
+}
+
+.bg-img-4 {
+    bottom: 10%;
+    right: 15%;
+    animation-delay: 4.5s;
+}
+
+/* パスワードモーダル */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal-content h3 {
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+#password-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#password-input:focus {
+    border-color: #ff69b4;
+}
+
+#password-submit {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #ff69b4, #ffd700);
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#password-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 105, 180, 0.3);
+}
+
+.error-message {
+    color: #ff4444;
+    margin-top: 15px;
+    font-size: 1rem;
+}
+
+/* メインコンテンツ */
+.main-content {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    overflow-y: auto;
+}
+
+/* 旅程ヘッダー */
+.itinerary-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.itinerary-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,100 1000,0 1000,100"/></svg>');
+    background-size: cover;
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+}
+
+.page-title {
+    font-size: 3rem;
+    font-weight: 300;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.trip-subtitle {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin-bottom: 20px;
+    font-weight: 300;
+}
+
+.trip-date {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-size: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* メインコンテンツ */
+.itinerary-main {
+    padding: 80px 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 60px;
+    font-weight: 300;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    margin: 20px auto;
+    border-radius: 2px;
+}
+
+/* 日カード */
+.day-card {
+    background: white;
+    border-radius: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.day-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.day-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.day-number {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.day-title {
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.day-date {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+/* タイムライン */
+.timeline {
+    padding: 40px;
+}
+
+.timeline-item {
+    display: flex;
+    margin-bottom: 30px;
+    align-items: flex-start;
+    position: relative;
+}
+
+.timeline-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 70px;
+    top: 70px;
+    bottom: -30px;
+    width: 2px;
+    background: linear-gradient(180deg, #667eea, #764ba2);
+    border-radius: 1px;
+}
+
+.time-marker {
+    flex-shrink: 0;
+    width: 140px;
+    text-align: center;
+    position: relative;
+}
+
+.time {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 500;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    position: relative;
+    z-index: 2;
+}
+
+.activity-card {
+    background: #f8f9ff;
+    border-radius: 15px;
+    padding: 25px;
+    margin-left: 30px;
+    flex-grow: 1;
+    border: 1px solid #e8ecff;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.activity-card:hover {
+    background: #f0f3ff;
+    transform: translateX(5px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+}
+
+.activity-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.activity-content h4 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.activity-content p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.activity-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 6px 15px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+/* 特別メッセージセクション */
+.special-message-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 80px 0;
+    margin-top: 60px;
+}
+
+.message-box {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 50px;
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.message-box h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    font-weight: 300;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.message-text {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    opacity: 0.95;
+}
+
+.signature {
+    font-size: 1.1rem;
+    font-style: italic;
+    opacity: 0.9;
+}
+
+/* 固定ナビゲーション */
+.fixed-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+}
+
+.fixed-nav.visible {
+    transform: translateY(0);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    height: 70px;
+}
+
+.nav-brand {
+    font-weight: 600;
+    color: #667eea;
+    font-size: 1.2rem;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 30px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.nav-link.active {
+    background: #667eea;
+    color: white;
+}
+
+/* プログレスバー */
+.progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(102, 126, 234, 0.2);
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+/* トップに戻るボタン */
+.back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    z-index: 999;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+}
+
+.back-to-top-icon {
+    display: block;
+    font-weight: bold;
+}
+
+/* 地図・アクセス情報セクション */
+.map-access-section {
+    background: #f8f9ff;
+    padding: 80px 0;
+}
+
+.route-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 50px;
+    font-weight: 400;
+}
+
+.route-overview {
+    background: white;
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 60px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+/* ルート地図 */
+.route-map {
+    margin-bottom: 40px;
+}
+
+/* 日本地図コンテナ */
+.japan-map-container {
+    background: linear-gradient(135deg, #f8f9ff 0%, #e8ecff 100%);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 20px;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.japan-map-svg {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    display: block;
+}
+
+/* 日本地図の輪郭 */
+.japan-outline {
+    transition: all 0.3s ease;
+}
+
+.japan-outline:hover {
+    transform: scale(1.02);
+    filter: drop-shadow(5px 8px 15px rgba(0, 0, 0, 0.2));
+}
+
+/* ルート線のアニメーション */
+.route-line-animated {
+    animation: routeDash 3s linear infinite;
+}
+
+@keyframes routeDash {
+    0% {
+        stroke-dashoffset: 0;
+    }
+    100% {
+        stroke-dashoffset: -24;
+    }
+}
+
+/* 地図上のピン */
+.map-pin {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.map-pin:hover {
+    transform: scale(1.1);
+}
+
+.pin-circle {
+    filter: drop-shadow(2px 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+.pin-pulse {
+    animation: pinPulse 2s ease-in-out infinite;
+}
+
+@keyframes pinPulse {
+    0%, 100% {
+        opacity: 0.3;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.1;
+        transform: scale(1.2);
+    }
+}
+
+/* 地図ラベル */
+.map-label {
+    pointer-events: none;
+    opacity: 0;
+    animation: labelFadeIn 1s ease-out 0.5s forwards;
+}
+
+@keyframes labelFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.start-label {
+    animation-delay: 1s;
+}
+
+.end-label {
+    animation-delay: 1.5s;
+}
+
+/* 移動情報SVG */
+.travel-info-svg {
+    opacity: 0;
+    animation: labelFadeIn 1s ease-out 2s forwards;
+}
+
+/* 移動する車 */
+.moving-car {
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* 地図説明 */
+.map-description {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.map-description p {
+    color: #667eea;
+    font-size: 1.1rem;
+    font-weight: 500;
+    background: white;
+    padding: 15px 25px;
+    border-radius: 25px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.15);
+}
+
+.route-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    margin: 40px 0;
+}
+
+.route-point {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 2;
+}
+
+.point-marker {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.point-marker.start {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+}
+
+.point-marker.end {
+    background: linear-gradient(135deg, #f44336, #da190b);
+    color: white;
+    box-shadow: 0 8px 20px rgba(244, 67, 54, 0.3);
+}
+
+.point-info h4 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.point-info p {
+    color: #666;
+    font-size: 1rem;
+}
+
+.route-segment {
+    flex-grow: 1;
+    position: relative;
+    margin: 0 20px;
+}
+
+.route-path {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.path-line {
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, #4CAF50, #667eea, #f44336);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+}
+
+.path-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: pathFlow 3s infinite;
+}
+
+@keyframes pathFlow {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.travel-info {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.travel-time {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.travel-method {
+    font-size: 1.2rem;
+}
+
+/* ルート詳細 */
+.route-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.route-card {
+    background: #f8f9ff;
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 4px solid #667eea;
+}
+
+.route-card h4 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.route-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.route-card li {
+    padding: 8px 0;
+    color: #666;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.route-card li:last-child {
+    border-bottom: none;
+}
+
+/* 各スポットアクセス */
+.spots-access {
+    margin-top: 60px;
+}
+
+.spots-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.access-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.access-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.access-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.access-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.access-card h4 {
+    font-size: 1.3rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.access-info p {
+    text-align: left;
+    margin-bottom: 12px;
+    color: #666;
+    line-height: 1.6;
+}
+
+.access-info strong {
+    color: #333;
+}
+
+/* 持ち物チェックリストセクション */
+.checklist-section {
+    background: white;
+    padding: 80px 0;
+}
+
+.checklist-intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.checklist-intro p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.checklist-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.checklist-category {
+    background: #f8f9ff;
+    border-radius: 15px;
+    padding: 30px;
+    border: 2px solid #e8ecff;
+}
+
+.category-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.category-icon {
+    font-size: 1.5rem;
+}
+
+.checklist-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.checklist-item:hover {
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.item-checkbox {
+    display: none;
+}
+
+.checkmark {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    position: relative;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.item-checkbox:checked + .checkmark {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-color: #667eea;
+}
+
+.item-checkbox:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.item-text {
+    color: #333;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.item-checkbox:checked ~ .item-text {
+    color: #667eea;
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+/* 進捗表示 */
+.checklist-progress {
+    background: #f8f9ff;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid #e8ecff;
+}
+
+.progress-info {
+    margin-bottom: 20px;
+}
+
+.progress-text {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 12px;
+    background: #e8ecff;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    width: 0%;
+    transition: width 0.5s ease;
+    border-radius: 6px;
+}
+
+.reset-checklist {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.reset-checklist:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+}
+
+/* アニメーション */
+@keyframes fadeInMessage {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes sparkle {
+    0% {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 10px #ff69b4;
+    }
+    100% {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+    }
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 10px #ffd700;
+    }
+    100% {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5), 0 0 20px #ffd700, 0 0 30px #ffd700;
+    }
+}
+
+@keyframes floatingImages {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-20px) rotate(5deg);
+    }
+    66% {
+        transform: translateY(10px) rotate(-3deg);
+    }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes titlePulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+@keyframes floatingStart {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateY(-15px) rotate(5deg) scale(1.1);
+    }
+    50% {
+        transform: translateY(-25px) rotate(-3deg) scale(1);
+    }
+    75% {
+        transform: translateY(-10px) rotate(3deg) scale(1.05);
+    }
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .welcome-title {
+        font-size: 2rem;
+    }
+    
+    .welcome-subtitle {
+        font-size: 1rem;
+    }
+    
+    .lets-go-button {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+    }
+    
+    .start-content {
+        padding: 40px;
+    }
+    
+    .birthday-message {
+        font-size: 2.5rem;
+    }
+    
+    .birthday-subtitle {
+        font-size: 1.5rem;
+    }
+    
+    .journey-button {
+        font-size: 1.2rem;
+        padding: 15px 30px;
+    }
+    
+    .bg-img {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .slide {
+        width: 90%;
+        height: 70%;
+    }
+    
+    /* 旅程ページのレスポンシブ */
+    .page-title {
+        font-size: 2rem;
+    }
+    
+    .trip-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .day-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+    }
+    
+    .day-title {
+        font-size: 1.4rem;
+    }
+    
+    .timeline {
+        padding: 20px;
+    }
+    
+    .timeline-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .timeline-item:not(:last-child)::after {
+        display: none;
+    }
+    
+    .time-marker {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .activity-card {
+        margin-left: 0;
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .activity-icon {
+        align-self: center;
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
+    }
+    
+    .message-box {
+        padding: 30px;
+    }
+    
+    .message-box h2 {
+        font-size: 2rem;
+    }
+    
+    .message-text {
+        font-size: 1.1rem;
+    }
+    
+    /* ナビゲーションのレスポンシブ */
+    .nav-menu {
+        gap: 15px;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 6px 12px;
+    }
+    
+    .nav-brand {
+        font-size: 1rem;
+    }
+    
+    .back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+        font-size: 1.2rem;
+    }
+    
+    /* 地図・アクセスのレスポンシブ */
+    .japan-map-container {
+        padding: 20px;
+    }
+    
+    .japan-map-svg {
+        max-height: 250px;
+    }
+    
+    .map-description p {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+    
+    .route-line {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .route-segment {
+        margin: 0;
+        width: 100%;
+    }
+    
+    .path-line {
+        height: 60px;
+        width: 4px;
+        background: linear-gradient(180deg, #4CAF50, #667eea, #f44336);
+    }
+    
+    .travel-info {
+        top: 50%;
+        left: 40px;
+        transform: translateY(-50%);
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .route-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .access-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* チェックリストのレスポンシブ */
+    .checklist-categories {
+        grid-template-columns: 1fr;
+    }
+}
