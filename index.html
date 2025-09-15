@@ -16,6 +16,28 @@
             <span id="skip-to-itinerary-start" class="skip-text-start">旅程を見る</span>
         </div>
         <div class="start-content">
+            <!-- カウントダウンタイマー -->
+            <div id="countdown-timer" class="countdown-container">
+                <h2 class="countdown-title">🎂 美優ちゃんの誕生日まで 🎂</h2>
+                <div class="countdown-display">
+                    <div class="countdown-item">
+                        <span id="countdown-days" class="countdown-number">0</span>
+                        <span class="countdown-label">日</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="countdown-hours" class="countdown-number">0</span>
+                        <span class="countdown-label">時間</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="countdown-minutes" class="countdown-number">0</span>
+                        <span class="countdown-label">分</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span id="countdown-seconds" class="countdown-number">0</span>
+                        <span class="countdown-label">秒</span>
+                    </div>
+                </div>
+            </div>
             
             <button id="lets-go-btn" class="lets-go-button">Let's Go!! 🎉</button>
         </div>
@@ -93,8 +115,25 @@
         </div>
     </div>
 
+    <!-- 2日目パスワード入力モーダル -->
+    <div id="day2-password-modal" class="modal hidden">
+        <div class="modal-content">
+            <button class="close-modal" id="close-day2-modal">×</button>
+            <h3>🎁 2日目の予定を見る</h3>
+            <p class="hint-text">特別な数字を入力してね（ヒント：美優ちゃんの誕生日）</p>
+            <input type="password" id="day2-password-input" placeholder="4桁の数字" maxlength="4">
+            <button id="day2-password-submit">確認</button>
+            <div id="day2-password-error" class="error-message hidden">パスワードが違います</div>
+        </div>
+    </div>
+
     <!-- 旅程画面（パスワード認証後に表示） -->
     <div id="main-content" class="main-content hidden">
+        <!-- ダークモード切り替えボタン -->
+        <button id="dark-mode-toggle" class="dark-mode-toggle" title="ダークモード切り替え">
+            <span class="mode-icon">🌙</span>
+        </button>
+        
         <!-- 固定ナビゲーション -->
         <nav id="fixed-nav" class="fixed-nav hidden">
             <div class="nav-container">
@@ -140,7 +179,7 @@
                         <div class="timeline">
                             <div class="timeline-item">
                                 <div class="time-marker">
-                                    <span class="time">08:30</span>
+                                    <span class="time">09:00</span>
                                 </div>
                                 <div class="activity-card clickable" data-detail-id="rental-car">
                                     <div class="activity-icon">🚗</div>
@@ -151,8 +190,8 @@
                                     </div>
                                     <div class="activity-details hidden" id="rental-car">
                                         <h5>🚗 レンタカー詳細</h5>
-                                        <p><strong>時刻:</strong> 8:30</p>
-                                        <p><strong>場所:</strong> 三山木駅でピックアップ</p>
+                                        <p><strong>時刻:</strong> 9:00</p>
+                                        <p><strong>場所:</strong> 藤阪駅でピックアップ</p>
                                         <p><strong>注意点:</strong> 集合時間だけ遅れないように！！</p>
                                     </div>
                                 </div>
@@ -249,11 +288,12 @@
                     </div>
 
                     <!-- 2日目 -->
-                    <div id="day2" class="day-card" data-day="2">
+                    <div id="day2" class="day-card blurred" data-day="2">
                         <div class="day-header">
                             <span class="day-number">Day 2</span>
-                            <h3 class="day-title">志摩グリーンアドベンチャー & 桐垣展望台</h3>
+                            <h3 class="day-title">🎁 お楽しみ 🎁</h3>
                             <span class="day-date">2日目</span>
+                            <button class="unlock-day2-btn" id="unlock-day2-btn">🔓 2日目の予定を見る</button>
                         </div>
                         
                         <div class="timeline">
@@ -626,9 +666,9 @@
                     <div class="message-box">
                         <h2>Special Message</h2>
                         <p class="message-text">
-                            美優ちゃん、お誕生日おめでとう！<br>
-                            この特別な2日間が、あなたにとって最高の思い出になりますように。<br>
-                            いつも笑顔でいてくれるあなたと過ごす時間が、私にとって一番の宝物です。
+                            21歳おめでとう！！<br>
+                            いつも一緒にいてくれてありがとう！！<br>
+                            これからもずっと一緒にいようね！！
                         </p>
                         <div class="signature">愛を込めて 💕</div>
                     </div>

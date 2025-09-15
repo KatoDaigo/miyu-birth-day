@@ -19,6 +19,85 @@ document.addEventListener('DOMContentLoaded', function() {
     const slideInterval = 2000; // 2秒間隔
     const correctPassword = '20231222'; // パスワード設定（変更可能）
     
+    // カウントダウンタイマー機能
+    function initCountdown() {
+        const targetDate = new Date('2025-09-16T00:00:00'); // 美優ちゃんの誕生日（9月16日）
+        
+        function updateCountdown() {
+            const now = new Date();
+            const difference = targetDate - now;
+            
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('countdown-days').textContent = days;
+                document.getElementById('countdown-hours').textContent = hours;
+                document.getElementById('countdown-minutes').textContent = minutes;
+                document.getElementById('countdown-seconds').textContent = seconds;
+            } else {
+                // 誕生日当日またはそれ以降
+                document.querySelector('.countdown-title').textContent = '🎉 Happy Birthday! 🎉';
+                document.querySelector('.countdown-display').innerHTML = '<div style="font-size: 2rem; color: white;">誕生日おめでとう！</div>';
+            }
+        }
+        
+        // 初回実行
+        updateCountdown();
+        // 1秒ごとに更新
+        setInterval(updateCountdown, 1000);
+    }
+    
+    // カウントダウンタイマーを初期化
+    initCountdown();
+    
+    // ダークモード機能
+    function initDarkMode() {
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const modeIcon = darkModeToggle?.querySelector('.mode-icon');
+        
+        // ローカルストレージから設定を読み込み
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            if (modeIcon) modeIcon.textContent = '☀️';
+        }
+        
+        // 切り替えボタンのイベントリスナー
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', function() {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                
+                // アイコンを変更
+                if (modeIcon) {
+                    modeIcon.textContent = isDark ? '☀️' : '🌙';
+                }
+                
+                // 設定を保存
+                localStorage.setItem('darkMode', isDark);
+            });
+        }
+    }
+    
+    // ダークモード機能を初期化（旅程ページが表示されたときに実行）
+    const darkModeMutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' && 
+                !mainContent.classList.contains('hidden')) {
+                
+                setTimeout(initDarkMode, 100);
+                darkModeMutationObserver.disconnect();
+            }
+        });
+    });
+    
+    darkModeMutationObserver.observe(mainContent, { attributes: true });
+    
     // スライドショー開始
     function startSlideshow() {
         const slideTimer = setInterval(() => {
@@ -576,59 +655,75 @@ document.addEventListener('DOMContentLoaded', function() {
                     'q5-reason': localStorage.getItem('qna-q5-reason') || '未回答'
                 };
                 
-                // 既存の回答表示エリアを探す
-                let answersDisplay = document.getElementById('answers-display');
+                // テキスト形式の回答を生成（コピー用）
+                const answersText = `美優ちゃんの誕生日旅行 - 質問への回答 📝
+
+🚗 運転はしたいですか？（ちょっとでも）
+→ ${answers['q1']}
+
+🍺 お酒は飲みたいですか？
+→ ${answers['q2']}
+
+👍 体調管理は万全ですか？
+→ ${answers['q3']}
+
+😊 楽しみですか？
+→ ${answers['q4']}
+
+🍽️ 二日目の夜ご飯は美優が考えてください
+→ お店：${answers['q5-restaurant']}
+→ 理由：${answers['q5-reason']}
+
+このメッセージは美優ちゃんの誕生日旅行サイトから生成されました 💕`;
                 
-                // 回答表示エリアがなければ作成
-                if (!answersDisplay) {
-                    answersDisplay = document.createElement('div');
-                    answersDisplay.id = 'answers-display';
-                    answersDisplay.className = 'answers-display';
-                    shareButton.parentNode.insertBefore(answersDisplay, shareButton.nextSibling);
-                }
-                
-                // 回答内容をHTMLで生成
-                const answersHTML = `
-                    <div class="answers-content">
-                        <h4>美優ちゃんの誕生日旅行 - 質問への回答 📝</h4>
-                        <div class="answer-item">
-                            <div class="answer-question">🚗 運転はしたいですか？（ちょっとでも）</div>
-                            <div class="answer-text">→ ${answers['q1']}</div>
-                        </div>
-                        <div class="answer-item">
-                            <div class="answer-question">🍺 お酒は飲みたいですか？</div>
-                            <div class="answer-text">→ ${answers['q2']}</div>
-                        </div>
-                        <div class="answer-item">
-                            <div class="answer-question">👍 体調管理は万全ですか？</div>
-                            <div class="answer-text">→ ${answers['q3']}</div>
-                        </div>
-                        <div class="answer-item">
-                            <div class="answer-question">😊 楽しみですか？</div>
-                            <div class="answer-text">→ ${answers['q4']}</div>
-                        </div>
-                        <div class="answer-item">
-                            <div class="answer-question">🍽️ 二日目の夜ご飯は美優が考えてください</div>
-                            <div class="answer-text">→ お店：${answers['q5-restaurant']}</div>
-                            <div class="answer-text">→ 理由：${answers['q5-reason']}</div>
-                        </div>
-                        <div class="answer-footer">このメッセージは美優ちゃんの誕生日旅行サイトから生成されました 💕</div>
-                    </div>
-                `;
-                
-                // 回答表示エリアに内容を設定
-                answersDisplay.innerHTML = answersHTML;
-                
-                // 表示を切り替える
-                if (answersDisplay.style.display === 'none' || !answersDisplay.style.display) {
-                    answersDisplay.style.display = 'block';
-                    shareButton.textContent = '📋 回答を隠す';
-                } else {
-                    answersDisplay.style.display = 'none';
-                    shareButton.textContent = '📋 回答を共有する';
-                }
+                // クリップボードにコピー
+                navigator.clipboard.writeText(answersText).then(() => {
+                    // 成功時のフィードバック
+                    const originalText = shareButton.textContent;
+                    shareButton.textContent = '✅ コピーしました！';
+                    shareButton.style.backgroundColor = '#4CAF50';
+                    
+                    // 2秒後に元に戻す
+                    setTimeout(() => {
+                        shareButton.textContent = originalText;
+                        shareButton.style.backgroundColor = '';
+                    }, 2000);
+                    
+                    // コピーした内容を表示する（確認用）
+                    showCopiedContent(answersText);
+                }).catch(err => {
+                    // エラー時のフィードバック
+                    console.error('コピーに失敗しました:', err);
+                    alert('コピーに失敗しました。もう一度お試しください。');
+                });
             });
         }
+    }
+    
+    // コピーした内容を表示する関数
+    function showCopiedContent(content) {
+        // 既存の表示エリアを探す
+        let answersDisplay = document.getElementById('answers-display');
+        
+        // 表示エリアがなければ作成
+        if (!answersDisplay) {
+            answersDisplay = document.createElement('div');
+            answersDisplay.id = 'answers-display';
+            answersDisplay.className = 'answers-display';
+            const shareButton = document.getElementById('share-answers-btn');
+            shareButton.parentNode.insertBefore(answersDisplay, shareButton.nextSibling);
+        }
+        
+        // コピーした内容を表示
+        answersDisplay.innerHTML = `
+            <div class="copied-content">
+                <h4>📋 コピーされた内容（LINEで送信できます）</h4>
+                <pre>${content}</pre>
+                <p class="copy-success">✅ 上記の内容がコピーされました！LINEで貼り付けて送信してね！</p>
+            </div>
+        `;
+        
+        answersDisplay.style.display = 'block';
     }
     
     // 旅程ページが表示された時に回答共有機能を初期化
@@ -645,6 +740,130 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     shareMutationObserver.observe(mainContent, { attributes: true });
+    
+    // 2日目のパスワード機能
+    function initDay2Password() {
+        const unlockBtn = document.getElementById('unlock-day2-btn');
+        const day2Modal = document.getElementById('day2-password-modal');
+        const day2PasswordInput = document.getElementById('day2-password-input');
+        const day2PasswordSubmit = document.getElementById('day2-password-submit');
+        const day2PasswordError = document.getElementById('day2-password-error');
+        const closeDay2Modal = document.getElementById('close-day2-modal');
+        const day2Card = document.getElementById('day2');
+        
+        // 2日目のロック状態を毎回リセット（常にロックされた状態で開始）
+        localStorage.removeItem('day2-unlocked');
+        if (day2Card) {
+            day2Card.classList.add('blurred');
+            // タイトルをお楽しみに設定
+            const dayTitle = day2Card.querySelector('.day-title');
+            if (dayTitle) {
+                dayTitle.textContent = '🎁 お楽しみ 🎁';
+            }
+        }
+        
+        // アンロックボタンのクリック処理
+        if (unlockBtn) {
+            unlockBtn.addEventListener('click', function() {
+                day2Modal.classList.remove('hidden');
+                day2PasswordInput.value = '';
+                day2PasswordInput.focus();
+            });
+        }
+        
+        // パスワード確認処理
+        if (day2PasswordSubmit) {
+            day2PasswordSubmit.addEventListener('click', function() {
+                const password = day2PasswordInput.value;
+                if (password === '0916') {
+                    // 正しいパスワード
+                    day2Card.classList.remove('blurred');
+                    day2Modal.classList.add('hidden');
+                    // localStorage.setItem('day2-unlocked', 'true'); // 保存しない
+                    
+                    // タイトルを元に戻す
+                    const dayTitle = day2Card.querySelector('.day-title');
+                    if (dayTitle) {
+                        dayTitle.textContent = '志摩グリーンアドベンチャー & 桐垣展望台';
+                    }
+                    
+                    // 成功メッセージ
+                    const successMessage = document.createElement('div');
+                    successMessage.className = 'success-message';
+                    successMessage.textContent = '🎉 2日目の予定が表示されました！';
+                    successMessage.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        padding: 20px 40px;
+                        border-radius: 15px;
+                        font-size: 1.2rem;
+                        font-weight: 600;
+                        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                        z-index: 10001;
+                        animation: fadeIn 0.3s ease;
+                    `;
+                    document.body.appendChild(successMessage);
+                    
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 2000);
+                } else {
+                    // 間違ったパスワード
+                    day2PasswordError.classList.remove('hidden');
+                    day2PasswordInput.style.borderColor = '#ff4444';
+                    
+                    setTimeout(() => {
+                        day2PasswordError.classList.add('hidden');
+                        day2PasswordInput.style.borderColor = '';
+                    }, 3000);
+                }
+            });
+        }
+        
+        // Enterキーでも送信
+        if (day2PasswordInput) {
+            day2PasswordInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    day2PasswordSubmit.click();
+                }
+            });
+        }
+        
+        // モーダルを閉じる
+        if (closeDay2Modal) {
+            closeDay2Modal.addEventListener('click', function() {
+                day2Modal.classList.add('hidden');
+            });
+        }
+        
+        // モーダル外側クリックで閉じる
+        if (day2Modal) {
+            day2Modal.addEventListener('click', function(e) {
+                if (e.target === day2Modal) {
+                    day2Modal.classList.add('hidden');
+                }
+            });
+        }
+    }
+    
+    // 旅程ページが表示された時に2日目パスワード機能を初期化
+    const day2MutationObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' && 
+                !mainContent.classList.contains('hidden')) {
+                
+                setTimeout(initDay2Password, 100);
+                day2MutationObserver.disconnect();
+            }
+        });
+    });
+
+    day2MutationObserver.observe(mainContent, { attributes: true });
     
     // ルートアニメーション機能
     function initRouteAnimation() {
